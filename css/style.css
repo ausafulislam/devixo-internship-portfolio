@@ -1180,6 +1180,13 @@ body.menu-open .nav-panel {
   font-weight: 600;
 }
 
+.education-card .study-period {
+  margin-top: 6px;
+  color: var(--color-text-muted);
+  font-size: var(--fs-label-sm);
+  line-height: var(--lh-label-sm);
+}
+
 .project-card {
   display: flex;
   flex-direction: column;

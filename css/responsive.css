@@ -355,3 +355,9 @@
     width: 460px;
   }
 }
+
+@media (max-width: 359px) {
+  .contact-list li {
+    gap: var(--gutter-sm);
+  }
+}

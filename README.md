@@ -145,6 +145,7 @@ Full-page captures: [desktop](screenshots/desktop/full-page.png) and [mobile](sc
 ## Contact
 
 - Email: ausafdev@gmail.com
+- Phone: +92 371 3920266
 - GitHub: https://github.com/ausafulislam
 - LinkedIn: https://linkedin.com/in/ausafulislam
 - X: https://x.com/ausafulislam_h
