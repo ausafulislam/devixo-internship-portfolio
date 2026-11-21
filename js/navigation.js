@@ -1,5 +1,6 @@
 'use strict';
 
+/** Floating menu: open/close states, focus handling, and section navigation. */
 window.PortfolioNavigation = (() => {
   const MENU_OPEN_CLASS = 'menu-open';
 

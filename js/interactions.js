@@ -1,5 +1,6 @@
 'use strict';
 
+/** Scroll reveals, rolling text, active sections, counters, and the contact form. */
 window.PortfolioInteractions = (() => {
   const validators = {
     name: (value) => value.trim().length >= 2 || 'Please enter your full name.',
@@ -35,6 +36,7 @@ window.PortfolioInteractions = (() => {
     return text;
   }
 
+  // Measure transformed text so uppercase CTA labels keep even spacing.
   function getRollCharWidths(text, element) {
     const characters = Array.from(text);
     const styles = window.getComputedStyle(element);

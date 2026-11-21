@@ -1,3 +1,4 @@
+/* Design tokens and shared styles for the light-only portfolio. */
 :root {
   color-scheme: light;
   --font-display: "Red Hat Display", sans-serif;

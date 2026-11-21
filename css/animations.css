@@ -1,3 +1,4 @@
+/* Motion, hover states, and reduced-motion overrides. */
 :root {
   --duration-fast: 150ms;
   --duration-normal: 300ms;

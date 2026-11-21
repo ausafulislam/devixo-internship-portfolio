@@ -1,3 +1,4 @@
+/* Responsive layout rules, from small screens up to large desktops. */
 @media (min-width: 640px) {
   :root {
     --page-padding: 32px;

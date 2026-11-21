@@ -1,5 +1,6 @@
 'use strict';
 
+// Boots the site once the DOM is ready.
 function initializePortfolio() {
   document.documentElement.classList.remove('no-js');
   document.documentElement.classList.add('js');
