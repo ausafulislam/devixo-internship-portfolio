@@ -1,13 +1,13 @@
 ---
-name: "MILAR Editorial Portfolio"
-description: "High-contrast Swiss-editorial portfolio design system pairing stark white surfaces and electric cobalt blue blocks with bold geometric sans and expressive italic serif typography."
+name: "Ausaf Developer Portfolio"
+description: "High-contrast portfolio design system for Ausaf Developer, pairing stark white surfaces and electric cobalt blue blocks with bold geometric sans and expressive italic serif typography."
 ---
 
 ## Overview
 
-MILAR Editorial Portfolio is a high-contrast, modern personal portfolio design system built for a multidisciplinary UI/UX Designer and Front-End Developer. It pairs gallery-clean white surfaces with bold, full-bleed electric cobalt blue (`#1638FF`) section blocks, oversized mixed-typographic headlines, and crisp pill-shaped interactive elements.
+Ausaf Developer Portfolio is a high-contrast, modern personal portfolio design system built for a multidisciplinary UI/UX Designer and Front-End Developer. It pairs gallery-clean white surfaces with bold, full-bleed electric cobalt blue (`#1638FF`) section blocks, oversized mixed-typographic headlines, and crisp pill-shaped interactive elements.
 
-The aesthetic balances Swiss-grid discipline with expressive editorial warmth: heavy uppercase geometric grotesque headlines collide with sweeping italic serif accents, while generous negative space keeps every section scannable, confident, and uncluttered.
+The aesthetic balances Swiss-grid discipline with expressive typographic warmth: heavy uppercase geometric grotesque headlines collide with sweeping italic serif accents, while generous negative space keeps every section scannable, confident, and uncluttered.
 
 ## Colors
 
@@ -15,7 +15,7 @@ The palette is anchored by pure gallery white (`#FFFFFF`) and electric cobalt bl
 
 - **Primary & Primary Container:** Deep cobalt (`#0023CB`) for high-contrast interactive controls and electric cobalt (`#1638FF`) for full-bleed feature bands, oversized display accents, and primary pill CTAs.
 - **Surfaces:** Stark white (`#FFFFFF`) as the primary canvas alternating with `#1638FF` cobalt bands and soft cool off-white (`#F4F2FF`) for subtle card elevation.
-- **Dark Mode:** Deep ink navy (`#12131D`) with crisp light neutral text (`#E2E1F0`) and luminous periwinkle-cobalt accents (`#BCC2FF`), preserving the high-contrast editorial rhythm.
+- **Dark Mode:** Deep ink navy (`#12131D`) with crisp light neutral text (`#E2E1F0`) and luminous periwinkle-cobalt accents (`#BCC2FF`), preserving the high-contrast visual rhythm.
 
 ```yaml
 colors:
@@ -86,9 +86,9 @@ colors:
 
 ## Typography
 
-The typographic identity relies on dramatic editorial contrast between three Google Fonts:
+The typographic identity relies on dramatic contrast between three Google Fonts:
 
-1. **Red Hat Display** (`headline`): Heavy, tight-tracked geometric sans-serif used in uppercase for monumental section titles, hero display words (`DESIGNER`), and brand wordmarks (`MILAR.`).
+1. **Red Hat Display** (`headline`): Heavy, tight-tracked geometric sans-serif used in uppercase for monumental section titles, hero display words (`DESIGNER`), and brand wordmarks (`AUSAF.`).
 2. **Instrument Serif** (`editorial`): Expressive italic serif used to punctuate headlines (`I'm`, `ui/ux`, `design needs`), pill tags, and personal signature moments.
 3. **Instrument Sans** (`body` and `label`): Crisp neo-grotesque sans-serif for readable body paragraphs, navigation links, form inputs, and uppercase micro-labels.
 
@@ -230,7 +230,7 @@ Elevation is flat and architectural. Hierarchy is established through stark surf
 The shape language pairs sharp architectural grids with friendly, tactile pill geometry:
 
 - **Buttons, Badges & Service Tags:** Always full pill (`9999px`) to echo the signature floating pill clusters and CTA buttons.
-- **Content Cards & Project Frames:** Softly rounded (`16px`–`24px`) for modern editorial polish without feeling bubbly.
+- **Content Cards & Project Frames:** Softly rounded (`16px`–`24px`) for modern visual polish without feeling bubbly.
 - **Form Inputs:** Clean `12px` rounded rectangles with crisp `1px` borders.
 
 ```yaml
