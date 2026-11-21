@@ -1,19 +1,43 @@
-# Personal Portfolio
+# Ausaf Ul Islam Portfolio
 
-A static personal portfolio website built as a foundation for the Devixo Solutions Internship Task 01. This phase includes only the project structure, semantic HTML boilerplate, organized CSS and JavaScript files, asset folders, and documentation. Website sections and visual implementation are not included yet.
+A complete static portfolio website for Ausaf Ul Islam, a Full-Stack Developer and AI Engineer. The site presents his profile, services, technical skills, education, experience, five featured projects, contact details, and social links.
+
+The implementation follows the approved desktop and mobile design references and the design system stored in `report/design-system/ausaf_design_system.md`.
 
 ## Technologies
 
 - HTML5
 - CSS3
 - Vanilla JavaScript (ES6+)
+- Google Fonts for the typography specified by the approved design system
 
-No frameworks, libraries, UI kits, or packages are used.
+No frameworks, CSS libraries, JavaScript libraries, animation libraries, UI kits, packages, or build tools are used.
 
-## Folder Structure
+## Features
+
+- Sticky navbar with brand and pill-shaped Menu button
+- Floating rounded navigation panel with dimmed, blurred backdrop, minimal close button, and hidden scrollbar
+- Oversized vertical section links with clip-path reveal, staggered entrance, and smooth reverse close
+- Staggered 3D letter-roll hover effect on navigation links and site CTAs
+- Keyboard-accessible menu with Escape-to-close, backdrop close, focus trapping, and scroll locking
+- Light and dark mode toggle with saved preference
+- One-line serif hero lockup, text reveal animation, enlarged display heading, overlapping portrait, and up-arrow talk CTA
+- Services cobalt showcase band with six service pills
+- About, technical skills, education, experience, featured projects, contact, and footer sections
+- Five project cards using the organized local project images and verified external links
+- Sixth GitHub call-to-action card
+- Contact form with inline validation and success status
+- Scroll-based section reveals and animated about-section stat counters using `IntersectionObserver`
+- Active section highlighting in navigation
+- Bold card styling with 3D tilt hover, rolling button text, footer link interactions, and no image lift effects
+- Responsive layouts for large desktop, standard desktop, laptop, tablet, and mobile screens
+- Reduced-motion support through `prefers-reduced-motion`
+- Semantic HTML, accessible labels, meaningful alt text, and skip link
+
+## Project Structure
 
 ```text
-portfolio/
+Portfolio/
 ├── index.html
 ├── css/
 │   ├── style.css
@@ -53,19 +77,34 @@ portfolio/
 
 ## File Responsibilities
 
-- `index.html`: Semantic HTML5 boilerplate and relative file references.
-- `css/style.css`: CSS reset, design tokens, and base reusable styles.
-- `css/responsive.css`: Responsive rules and breakpoint variables.
-- `css/animations.css`: Animation tokens and reduced-motion handling.
-- `js/navigation.js`: Navigation-related behavior.
-- `js/interactions.js`: General interaction behavior.
+- `index.html`: Semantic structure for all portfolio sections and file references.
+- `css/style.css`: Design tokens, reset, typography, layouts, components, and section styling.
+- `css/responsive.css`: Desktop, tablet, and mobile media queries.
+- `css/animations.css`: Keyframes, transitions, hover effects, reveal states, and reduced-motion handling.
+- `js/navigation.js`: Floating menu panel, backdrop, close control, stagger state, focus handling, scroll locking, section navigation, and mode toggle.
+- `js/interactions.js`: Letter-roll text wrapping and interactions, scroll reveals, active section tracking, and contact form validation.
 - `js/script.js`: Shared initialization for navigation and interaction modules.
-- `report/design-system/ausaf_design_system.md`: Approved site design-system reference.
-- `screenshots/desktop/design/code.html`: Approved desktop UI/UX reference.
-- `screenshots/mobile/design/code.html`: Approved mobile responsive UI/UX reference.
+- `report/design-system/ausaf_design_system.md`: Approved design-system reference.
+- `screenshots/desktop/design/code.html`: Approved desktop design reference.
+- `screenshots/mobile/design/code.html`: Approved mobile design reference.
 
-The approved design exports are kept as reference files and now use the local profile and project images. The Restaurant Website card uses verified project details and links. These files are not production dependencies.
+The design reference files are kept for comparison and are not production dependencies.
 
-## Usage
+## Run Locally
 
-Open `index.html` directly in a browser. No build step, server, or dependency installation is required.
+No build step or dependency installation is required.
+
+Open `index.html` directly in a browser.
+
+For a local server, run this command from the project root:
+
+```bash
+python -m http.server 8000
+```
+
+Then open `http://localhost:8000`.
+
+## Screenshots
+
+- [Desktop design reference](screenshots/desktop/design/code.html)
+- [Mobile design reference](screenshots/mobile/design/code.html)

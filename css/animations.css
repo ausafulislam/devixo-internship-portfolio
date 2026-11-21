@@ -1,16 +1,334 @@
 :root {
   --duration-fast: 150ms;
   --duration-normal: 300ms;
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-reveal: 600ms;
+  --ease-state: ease-out;
+  --ease-surface: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.js .page-loader {
+  opacity: 1;
+}
+
+.js body:not(.is-ready) .page-loader::after {
+  animation: loader-progress 600ms var(--ease-surface) forwards;
+}
+
+.js body.is-ready .page-loader {
+  animation: loader-hide 400ms var(--ease-state) forwards;
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--duration-reveal) var(--ease-surface), transform var(--duration-reveal) var(--ease-surface);
+}
+
+.js [data-reveal].is-visible:not(.hero-animate) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js .hero-animate {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.js body.is-ready .hero-animate {
+  animation: hero-rise 700ms var(--ease-surface) forwards;
+}
+
+.js body.is-ready .hero-serif-start {
+  animation-delay: 80ms;
+}
+
+.js body.is-ready .hero-serif-end {
+  animation-delay: 160ms;
+}
+
+.js body.is-ready .hero-title {
+  animation-delay: 240ms;
+}
+
+.js body.is-ready .hero-bio {
+  animation-delay: 320ms;
+}
+
+.js body.is-ready .hero-portrait {
+  animation-delay: 400ms;
+}
+
+.js body.is-ready .hero-copy {
+  animation-delay: 480ms;
+}
+
+.js body.is-ready .hero-serif,
+.js body.is-ready .hero-title {
+  animation-name: text-reveal;
+  animation-duration: 900ms;
+}
+
+.js body.is-ready .status-dot::after {
+  animation: status-pulse 900ms var(--ease-state) 600ms 1;
+}
+
+.js .site-footer [data-reveal].is-visible {
+  transition-delay: 80ms;
+}
+
+.menu-backdrop,
+.nav-panel,
+.menu-icon span,
+.menu-button,
+.menu-close-button,
+.mode-toggle,
+.pill,
+.nav-link,
+.card,
+.skill-card,
+.project-card,
+.project-media img,
+.hero-portrait img,
+.footer-nav a,
+.footer-connect a,
+.text-link,
+.field input,
+.field textarea {
+  transition-property: opacity, transform, color, background-color, border-color, box-shadow;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-state);
+}
+
+.menu-backdrop {
+  transition-property: opacity, visibility;
+  transition-duration: 420ms;
+  transition-timing-function: var(--ease-surface);
+}
+
+.nav-panel {
+  transition-property: clip-path, transform, opacity, visibility;
+  transition-duration: 620ms;
+  transition-timing-function: var(--ease-surface);
+}
+
+.menu-close-button {
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-surface);
+}
+
+.menu-close-button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.nav-link .icon {
+  transition-property: opacity, transform;
+  transition-duration: 320ms;
+  transition-timing-function: var(--ease-surface);
+}
+
+body.menu-open .nav-link .icon {
+  opacity: 1;
+  transform: translate(0, 0);
+  transition-delay: calc(360ms + (var(--stagger-index, 0) * 46ms));
+}
+
+.nav-panel.is-open .nav-link {
+  animation: menu-link-in 620ms var(--ease-surface) both;
+  animation-delay: calc(140ms + (var(--stagger-index, 0) * 46ms));
+}
+
+.nav-panel.is-closing .nav-link {
+  transition-duration: 280ms;
+  transition-delay: var(--reverse-delay, 0ms);
+}
+
+.card,
+.project-media img,
+.hero-portrait img {
+  transition-duration: var(--duration-normal);
+}
+
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
+.service-pill {
+  transition: transform var(--duration-fast) var(--ease-state), background-color var(--duration-fast) var(--ease-state);
+}
+
+.service-pill:hover {
+  transform: translateY(-4px);
+  background: #f4f2ff;
+}
+
+.icon-circle {
+  transition: transform 320ms var(--ease-surface), background-color var(--duration-fast) var(--ease-state), color var(--duration-fast) var(--ease-state);
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: 0 18px 42px rgba(18, 19, 29, 0.12);
+  transform: perspective(900px) rotateX(3deg) rotateY(-3deg) scale(1.012);
+}
+
+.card:hover .icon-circle,
+.card:focus-within .icon-circle {
+  transform: translateZ(18px);
+}
+
+.footer-nav a:hover,
+.footer-connect a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.js .projects-grid [data-reveal]:nth-child(2),
+.js .skills-grid [data-reveal]:nth-child(2),
+.js .education-grid [data-reveal]:nth-child(2),
+.js .experience-grid [data-reveal]:nth-child(2) {
+  transition-delay: 60ms;
+}
+
+.js .projects-grid [data-reveal]:nth-child(3),
+.js .skills-grid [data-reveal]:nth-child(3),
+.js .experience-grid [data-reveal]:nth-child(3) {
+  transition-delay: 120ms;
+}
+
+.js .projects-grid [data-reveal]:nth-child(4),
+.js .skills-grid [data-reveal]:nth-child(4),
+.js .experience-grid [data-reveal]:nth-child(4) {
+  transition-delay: 180ms;
+}
+
+.js .projects-grid [data-reveal]:nth-child(5) {
+  transition-delay: 240ms;
+}
+
+.js .projects-grid [data-reveal]:nth-child(6) {
+  transition-delay: 300ms;
+}
+
+.mode-toggle[aria-pressed="true"] {
+  border-color: var(--color-secondary-container);
+  background: var(--color-secondary-container);
+  color: var(--color-on-secondary-container);
+}
+
+@keyframes menu-link-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loader-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes loader-hide {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes text-reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes status-pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.6);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
-    scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .js [data-reveal],
+  .js .hero-animate {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-cta {
+    transform: translateX(-50%) !important;
+  }
+
+  .menu-backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .nav-panel {
+    clip-path: none !important;
+    transform: none !important;
+  }
+
+  .roll-target.is-rolling .roll-face-front,
+  .roll-target.is-rolling .roll-face-back {
+    transform: rotateX(0deg) translateZ(0);
+  }
+
+  .page-loader {
+    display: none;
   }
 }
