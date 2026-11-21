@@ -11,7 +11,6 @@ window.PortfolioInteractions = (() => {
   const ROLL_SELECTORS = [
     '.nav-link > span:first-child',
     '.menu-button-label',
-    '.mode-toggle > span:last-child',
     '.hero-cta > span',
     '.pill',
     '.text-link'
@@ -20,23 +19,42 @@ window.PortfolioInteractions = (() => {
   const WIDE_CHARS = /[mwMW@%]/;
   const ROLL_CONTEXT = document.createElement('canvas').getContext('2d');
 
+  function applyTextTransform(text, transform) {
+    if (transform === 'uppercase') {
+      return text.toUpperCase();
+    }
+
+    if (transform === 'lowercase') {
+      return text.toLowerCase();
+    }
+
+    if (transform === 'capitalize') {
+      return text.replace(/(^|\s)(\S)/g, (match, prefix, character) => prefix + character.toUpperCase());
+    }
+
+    return text;
+  }
+
   function getRollCharWidths(text, element) {
     const characters = Array.from(text);
     const styles = window.getComputedStyle(element);
+    const transformedCharacters = Array.from(applyTextTransform(text, styles.textTransform));
+    const measureCharacters = transformedCharacters.length === characters.length ? transformedCharacters : characters;
     const fontSize = Number.parseFloat(styles.fontSize) || 16;
     const letterSpacing = styles.letterSpacing === 'normal' ? 0 : Number.parseFloat(styles.letterSpacing) || 0;
 
     if (!ROLL_CONTEXT) {
-      return characters.map((character) => {
+      return characters.map((character, index) => {
+        const measuredCharacter = measureCharacters[index] || character;
         let width = 0.64;
 
-        if (character === ' ') {
+        if (measuredCharacter === ' ') {
           width = 0.32;
-        } else if (NARROW_CHARS.test(character)) {
+        } else if (NARROW_CHARS.test(measuredCharacter)) {
           width = 0.38;
-        } else if (WIDE_CHARS.test(character)) {
+        } else if (WIDE_CHARS.test(measuredCharacter)) {
           width = 0.94;
-        } else if (/[A-Z0-9]/.test(character)) {
+        } else if (/[A-Z0-9]/.test(measuredCharacter)) {
           width = 0.74;
         }
 
@@ -48,7 +66,7 @@ window.PortfolioInteractions = (() => {
 
     let previousWidth = 0;
     return characters.map((character, index) => {
-      const currentWidth = ROLL_CONTEXT.measureText(characters.slice(0, index + 1).join('')).width;
+      const currentWidth = ROLL_CONTEXT.measureText(measureCharacters.slice(0, index + 1).join('')).width;
       const width = currentWidth - previousWidth + letterSpacing;
       previousWidth = currentWidth;
       return `${Math.max(width, 1) / fontSize}em`;
@@ -142,7 +160,7 @@ window.PortfolioInteractions = (() => {
 
   function bindRollInteractions() {
     document.querySelectorAll('.roll-target').forEach((target) => {
-      bindRollHost(target.closest('.nav-link, .menu-button, .mode-toggle, .pill, .text-link') || target);
+      bindRollHost(target.closest('.nav-link, .menu-button, .pill, .text-link') || target);
     });
   }
 
@@ -156,7 +174,7 @@ window.PortfolioInteractions = (() => {
       return;
     }
 
-    const host = element.closest('.nav-link, .menu-button, .mode-toggle, .pill, .text-link') || element;
+    const host = element.closest('.nav-link, .menu-button, .pill, .text-link') || element;
     element.querySelectorAll('.roll-target').forEach((target) => target.remove());
 
     const target = createRollTarget(value, element);
@@ -194,6 +212,10 @@ window.PortfolioInteractions = (() => {
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(refreshRollWidths);
     }
+
+    window.addEventListener('load', () => {
+      window.requestAnimationFrame(refreshRollWidths);
+    });
 
     let resizeTimer = 0;
     window.addEventListener('resize', () => {

@@ -1,7 +1,6 @@
 'use strict';
 
 window.PortfolioNavigation = (() => {
-  const STORAGE_KEY = 'ausaf-portfolio-theme';
   const MENU_OPEN_CLASS = 'menu-open';
 
   const state = {
@@ -9,7 +8,6 @@ window.PortfolioNavigation = (() => {
     menuLabel: null,
     menuCloseButton: null,
     navPanel: null,
-    modeToggle: null,
     lastFocused: null,
     closeTimer: null,
     isOpen: false
@@ -142,45 +140,6 @@ window.PortfolioNavigation = (() => {
     closeMenu({ restoreFocus: false });
   }
 
-  function applyTheme(isDark) {
-    document.documentElement.classList.toggle('dark', isDark);
-    state.modeToggle.setAttribute('aria-pressed', String(isDark));
-
-    const themeColor = document.querySelector('meta[name="theme-color"]');
-    if (themeColor) {
-      themeColor.setAttribute('content', isDark ? '#12131D' : '#FFFFFF');
-    }
-  }
-
-  function getStoredTheme() {
-    try {
-      return window.localStorage.getItem(STORAGE_KEY);
-    } catch (error) {
-      return null;
-    }
-  }
-
-  function storeTheme(theme) {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, theme);
-    } catch (error) {
-      return;
-    }
-  }
-
-  function initModeToggle() {
-    if (!state.modeToggle) {
-      return;
-    }
-
-    applyTheme(getStoredTheme() === 'dark');
-    state.modeToggle.addEventListener('click', () => {
-      const isDark = !document.documentElement.classList.contains('dark');
-      applyTheme(isDark);
-      storeTheme(isDark ? 'dark' : 'light');
-    });
-  }
-
   function prepareMenuLinks() {
     const links = Array.from(state.navPanel.querySelectorAll('.nav-link'));
     links.forEach((link, index) => {
@@ -194,7 +153,6 @@ window.PortfolioNavigation = (() => {
     state.menuLabel = document.querySelector('.menu-button-label');
     state.menuCloseButton = document.getElementById('menu-close-button');
     state.navPanel = document.getElementById('nav-menu-panel');
-    state.modeToggle = document.getElementById('mode-toggle');
 
     if (!state.menuButton || !state.menuLabel || !state.navPanel) {
       return;
@@ -226,8 +184,6 @@ window.PortfolioNavigation = (() => {
         window.setTimeout(() => target.focus({ preventScroll: true }), 420);
       });
     });
-
-    initModeToggle();
   }
 
   return {

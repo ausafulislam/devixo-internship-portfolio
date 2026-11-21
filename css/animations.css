@@ -81,7 +81,6 @@
 .menu-icon span,
 .menu-button,
 .menu-close-button,
-.mode-toggle,
 .pill,
 .nav-link,
 .card,
@@ -210,12 +209,6 @@ body.menu-open .nav-link .icon {
 
 .js .projects-grid [data-reveal]:nth-child(6) {
   transition-delay: 300ms;
-}
-
-.mode-toggle[aria-pressed="true"] {
-  border-color: var(--color-secondary-container);
-  background: var(--color-secondary-container);
-  color: var(--color-on-secondary-container);
 }
 
 @keyframes menu-link-in {

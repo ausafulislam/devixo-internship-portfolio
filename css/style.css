@@ -62,25 +62,6 @@
   --radius-full: 9999px;
 }
 
-html.dark {
-  color-scheme: dark;
-  --color-accent: #bcc2ff;
-  --color-primary: #bcc2ff;
-  --color-on-primary: #00189a;
-  --color-background: #12131d;
-  --color-surface: #12131d;
-  --color-surface-container-low: #1a1b25;
-  --color-surface-container: #1e1f29;
-  --color-surface-container-high: #282934;
-  --color-text: #e2e1f0;
-  --color-text-muted: #c5c5da;
-  --color-outline: #8e8fa3;
-  --color-outline-variant: #444657;
-  --color-secondary-container: #313d97;
-  --color-on-secondary-container: #dfe0ff;
-  --color-focus-ring: rgba(188, 194, 255, 0.2);
-}
-
 *,
 *::before,
 *::after {
@@ -112,7 +93,6 @@ body.menu-open {
 }
 
 .menu-button,
-.mode-toggle,
 .pill,
 .nav-link,
 .footer-nav a,
@@ -612,20 +592,6 @@ body.menu-open .nav-panel {
   color: var(--color-text-muted);
   font-size: var(--fs-label-md);
   font-weight: 600;
-}
-
-.mode-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 40px;
-  padding: 8px 14px;
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-full);
-  font-size: var(--fs-label-sm);
-  font-weight: 700;
-  letter-spacing: 0.75px;
-  text-transform: uppercase;
 }
 
 .hero {
