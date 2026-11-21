@@ -23,6 +23,15 @@ window.PortfolioNavigation = (() => {
     return Array.from(state.navPanel.querySelectorAll('a[href], button:not([disabled])'));
   }
 
+  function setMenuLabel(text) {
+    if (window.PortfolioInteractions?.setRollText) {
+      window.PortfolioInteractions.setRollText(state.menuLabel, text);
+      return;
+    }
+
+    state.menuLabel.textContent = text;
+  }
+
   function openMenu() {
     if (!state.navPanel || state.isOpen) {
       return;
@@ -35,7 +44,7 @@ window.PortfolioNavigation = (() => {
     document.body.classList.add(MENU_OPEN_CLASS);
     state.menuButton.setAttribute('aria-expanded', 'true');
     state.menuButton.setAttribute('aria-label', 'Close navigation menu');
-    state.menuLabel.textContent = 'Close';
+    setMenuLabel('Close');
     state.navPanel.classList.add('is-open');
     state.navPanel.setAttribute('aria-hidden', 'false');
     state.navPanel.removeAttribute('inert');
@@ -63,7 +72,7 @@ window.PortfolioNavigation = (() => {
     document.body.classList.remove(MENU_OPEN_CLASS);
     state.menuButton.setAttribute('aria-expanded', 'false');
     state.menuButton.setAttribute('aria-label', 'Open navigation menu');
-    state.menuLabel.textContent = 'Menu';
+    setMenuLabel('Menu');
     state.navPanel.classList.add('is-closing');
     state.navPanel.classList.remove('is-open');
     state.navPanel.setAttribute('aria-hidden', 'true');
@@ -192,7 +201,10 @@ window.PortfolioNavigation = (() => {
     }
 
     prepareMenuLinks();
-    state.menuButton.addEventListener('click', toggleMenu);
+    state.menuButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleMenu();
+    });
     state.menuCloseButton?.addEventListener('click', () => closeMenu());
     document.addEventListener('keydown', handleKeydown);
     document.addEventListener('click', handleDocumentClick);

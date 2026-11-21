@@ -18,6 +18,42 @@ window.PortfolioInteractions = (() => {
   ];
   const NARROW_CHARS = /[iljtf.,:'’|!]/;
   const WIDE_CHARS = /[mwMW@%]/;
+  const ROLL_CONTEXT = document.createElement('canvas').getContext('2d');
+
+  function getRollCharWidths(text, element) {
+    const characters = Array.from(text);
+    const styles = window.getComputedStyle(element);
+    const fontSize = Number.parseFloat(styles.fontSize) || 16;
+    const letterSpacing = styles.letterSpacing === 'normal' ? 0 : Number.parseFloat(styles.letterSpacing) || 0;
+
+    if (!ROLL_CONTEXT) {
+      return characters.map((character) => {
+        let width = 0.64;
+
+        if (character === ' ') {
+          width = 0.32;
+        } else if (NARROW_CHARS.test(character)) {
+          width = 0.38;
+        } else if (WIDE_CHARS.test(character)) {
+          width = 0.94;
+        } else if (/[A-Z0-9]/.test(character)) {
+          width = 0.74;
+        }
+
+        return `${width}em`;
+      });
+    }
+
+    ROLL_CONTEXT.font = `${styles.fontStyle} ${styles.fontWeight} ${styles.fontSize} ${styles.fontFamily}`;
+
+    let previousWidth = 0;
+    return characters.map((character, index) => {
+      const currentWidth = ROLL_CONTEXT.measureText(characters.slice(0, index + 1).join('')).width;
+      const width = currentWidth - previousWidth + letterSpacing;
+      previousWidth = currentWidth;
+      return `${Math.max(width, 1) / fontSize}em`;
+    });
+  }
 
   function createRollFace(character, faceClass) {
     const face = document.createElement('span');
@@ -26,23 +62,15 @@ window.PortfolioInteractions = (() => {
     return face;
   }
 
-  function createRollChar(character, index, total) {
+  function createRollChar(character, index, total, width) {
     const char = document.createElement('span');
     char.className = 'roll-char';
-    let width = 0.64;
 
     if (character === ' ') {
       char.classList.add('roll-char-space');
-      width = 0.32;
-    } else if (NARROW_CHARS.test(character)) {
-      width = 0.38;
-    } else if (WIDE_CHARS.test(character)) {
-      width = 0.94;
-    } else if (/[A-Z0-9]/.test(character)) {
-      width = 0.74;
     }
 
-    char.style.setProperty('--char-width', `${width}em`);
+    char.style.setProperty('--char-width', width);
     char.style.setProperty('--char-delay', `${index * 34}ms`);
     char.style.setProperty('--return-delay', `${(total - index - 1) * 16}ms`);
     char.appendChild(createRollFace(character, 'roll-face-front'));
@@ -50,19 +78,21 @@ window.PortfolioInteractions = (() => {
     return char;
   }
 
-  function createRollTarget(text) {
+  function createRollTarget(text, element) {
     const target = document.createElement('span');
     const screenReaderText = document.createElement('span');
     const chars = document.createElement('span');
     const characters = Array.from(text);
+    const widths = getRollCharWidths(text, element);
 
     target.className = 'roll-target';
+    target.dataset.rollText = text;
     screenReaderText.className = 'roll-sr';
     screenReaderText.textContent = text;
     chars.className = 'roll-chars';
     chars.setAttribute('aria-hidden', 'true');
     characters.forEach((character, index) => {
-      chars.appendChild(createRollChar(character, index, characters.length));
+      chars.appendChild(createRollChar(character, index, characters.length, widths[index]));
     });
 
     target.appendChild(screenReaderText);
@@ -83,20 +113,75 @@ window.PortfolioInteractions = (() => {
     textNodes.forEach((node) => {
       const text = node.textContent.trim();
       if (text) {
-        node.parentNode.replaceChild(createRollTarget(text), node);
+        node.parentNode.replaceChild(createRollTarget(text, element), node);
       }
     });
     element.dataset.rollReady = 'true';
   }
 
+  function bindRollHost(host) {
+    if (!host || host.dataset.rollHostReady === 'true') {
+      return;
+    }
+
+    host.dataset.rollHostReady = 'true';
+
+    host.addEventListener('pointerenter', () => {
+      host.querySelectorAll('.roll-target').forEach((target) => target.classList.add('is-rolling'));
+    });
+    host.addEventListener('pointerleave', () => {
+      host.querySelectorAll('.roll-target').forEach((target) => target.classList.remove('is-rolling'));
+    });
+    host.addEventListener('focus', () => {
+      host.querySelectorAll('.roll-target').forEach((target) => target.classList.add('is-rolling'));
+    });
+    host.addEventListener('blur', () => {
+      host.querySelectorAll('.roll-target').forEach((target) => target.classList.remove('is-rolling'));
+    });
+  }
+
   function bindRollInteractions() {
     document.querySelectorAll('.roll-target').forEach((target) => {
-      const host = target.closest('.nav-link, .menu-button, .mode-toggle, .pill, .text-link') || target;
+      bindRollHost(target.closest('.nav-link, .menu-button, .mode-toggle, .pill, .text-link') || target);
+    });
+  }
 
-      host.addEventListener('pointerenter', () => target.classList.add('is-rolling'));
-      host.addEventListener('pointerleave', () => target.classList.remove('is-rolling'));
-      host.addEventListener('focus', () => target.classList.add('is-rolling'));
-      host.addEventListener('blur', () => target.classList.remove('is-rolling'));
+  function setRollText(element, text) {
+    if (!element) {
+      return;
+    }
+
+    const value = String(text).trim();
+    if (!value) {
+      return;
+    }
+
+    const host = element.closest('.nav-link, .menu-button, .mode-toggle, .pill, .text-link') || element;
+    element.querySelectorAll('.roll-target').forEach((target) => target.remove());
+
+    const target = createRollTarget(value, element);
+    if (host.matches(':hover') || document.activeElement === host) {
+      target.classList.add('is-rolling');
+    }
+
+    element.appendChild(target);
+    element.dataset.rollReady = 'true';
+    bindRollHost(host);
+  }
+
+  function refreshRollWidths() {
+    document.querySelectorAll('.roll-target').forEach((target) => {
+      const text = target.dataset.rollText;
+      const element = target.parentElement;
+
+      if (!text || !element) {
+        return;
+      }
+
+      const widths = getRollCharWidths(text, element);
+      target.querySelectorAll('.roll-char').forEach((char, index) => {
+        char.style.setProperty('--char-width', widths[index]);
+      });
     });
   }
 
@@ -105,6 +190,16 @@ window.PortfolioInteractions = (() => {
       document.querySelectorAll(selector).forEach(wrapRollText);
     });
     bindRollInteractions();
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(refreshRollWidths);
+    }
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(refreshRollWidths, 120);
+    });
   }
 
   function initReveals() {
@@ -304,6 +399,7 @@ window.PortfolioInteractions = (() => {
   }
 
   return {
-    init
+    init,
+    setRollText
   };
 })();

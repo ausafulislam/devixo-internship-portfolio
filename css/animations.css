@@ -271,7 +271,7 @@ body.menu-open .nav-link .icon {
 
   to {
     opacity: 1;
-    clip-path: inset(0 0 0 0);
+    clip-path: inset(-12% -12% -12% -12%);
     transform: translateY(0);
   }
 }
